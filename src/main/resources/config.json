@@ -1,0 +1,132 @@
+{
+  "itemsConfig": {
+    "maxRetryTimes": 0,
+    "queryFieldMap": {},
+    fieldMaps: [
+      {
+        name: 'title',
+        searchable: true,
+        fieldId: 1
+      },
+      {
+        name: 'lot',
+        searchable: false,
+        fieldId: 2
+      },
+      {
+        name: 'price',
+        searchable: false,
+        fieldId: 3
+      },
+      {
+        name: 'itemUrl',
+        searchable: false,
+        fieldId: 4
+      },
+      {
+        name: 'city',
+        searchable: false,
+        fieldId: 5
+      },
+      {
+        name: 'meeting',
+        searchable: false,
+        fieldId: 6
+      },
+      {
+        name: 'date',
+        searchable: false,
+        fieldId: 7
+      },
+      {
+        name: 'meetingUrl',
+        searchable: false,
+        fieldId: 8
+      }
+    ],
+    fetchSteps: [
+      {
+        url: 'https://auction.artron.net/preauction/${catalog}-0-1-0-0-${page1}/?starttime=${date}&endtime=2029-12-20',
+        method: 'GET',
+        reqCharset: 'utf-8',
+        respCharset: 'utf-8',
+        containingRecords: true
+      }
+    ],
+    rsFormat: {
+      hitExpr: {
+        startTag: '</strong>页 <em>',
+        endTag: '</em>'
+      },
+      rsAreaExpr: {
+        startTag: '<ul class="imgList clearfix">',
+        endTag: '<div class="result-page">'
+      },
+      recAreaExpr: {
+        loopType: 'tag',
+        startTag: '<div class="imgArea">',
+        endTag: '</ul>',
+        includeStartTag: false,
+        includeEndTag: false,
+        script: '',
+        escapeHtml: true
+      },
+      fieldExprs: [
+        {
+          fieldId: '1',
+          "anchorTag": '<h3>',
+          startTag: 'title="',
+          endTag: '"',
+          maxValueLength: 4096
+        },
+        {
+          fieldId: '2',
+          startTag: '<em>LOT号：</em>',
+          endTag: '</li>',
+          maxValueLength: 4096
+        },
+        {
+          fieldId: '3',
+          startTag: '<em>估价：</em>',
+          endTag: '</li>',
+          maxValueLength: 4096,
+          escapeHtml: true
+        },
+        {
+          fieldId: '4',
+          startTag: 'href="',
+          endTag: '"',
+          maxValueLength: 4096
+        },
+        {
+          fieldId: '5',
+          startTag: '<em>拍卖地点：</em>',
+          endTag: '</li>',
+          maxValueLength: 4096,
+          escapeHtml: true
+        },
+        {
+          fieldId: '6',
+          startTag: '<em>专场：</em>',
+          endTag: '</li>',
+          maxValueLength: 4096,
+          escapeHtml: true
+        },
+        {
+          fieldId: '7',
+          startTag: '<em>日期：</em>',
+          endTag: '</li>',
+          maxValueLength: 4096,
+          escapeHtml: true
+        },
+        {
+          fieldId: '8',
+          "anchorTag": '<li><em>专场：</em>',
+          startTag: 'href="',
+          endTag: '"',
+          maxValueLength: 4096
+        }
+      ]
+    }
+  }
+}

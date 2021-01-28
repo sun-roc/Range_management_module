@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.sdu.ise.labs.dao.RangeMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.sdu.ise.labs.model.Range" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="range_code" property="rangeCode" jdbcType="VARCHAR" />
+    <result column="range_name" property="rangeName" jdbcType="VARCHAR" />
+    <result column="range_location" property="rangeLocation" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="close_reason" property="closeReason" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="updated_by" property="updatedBy" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, range_code, range_name, range_location, status, close_reason, description, created_at, 
+    updated_at, created_by, updated_by
+  </sql>
+  <insert id="insert" parameterType="cn.edu.sdu.ise.labs.model.Range" >
+    insert into `range` (id,range_code, range_name,range_location, status, close_reason,description,created_at,updated_at,created_by, updated_by)
+    values (#{id,jdbcType=INTEGER}, #{rangeCode,jdbcType=VARCHAR}, #{rangeName,jdbcType=VARCHAR},
+      #{rangeLocation,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{closeReason,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=VARCHAR}, #{updatedBy,jdbcType=VARCHAR})
+  </insert>
+  <select id="count" resultType="integer">
+    select count(*)
+    from `range`
+    <where>
+      <if test="queryDTO.rangeName != null">
+        AND range_name like #{queryDTO.rangeName}
+      </if>
+      <if test="queryDTO.rangeLocation != null">
+        AND range_location like #{queryDTO.rangeLocation}
+      </if>
+      <if test="queryDTO.status != null">
+        AND status = #{queryDTO.status}
+      </if>
+    </where>
+  </select>
+  <select id="list" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from `range`
+    <where>
+    <if test="queryDTO.rangeName != null">
+      AND range_name like #{queryDTO.rangeName}
+    </if>
+    <if test="queryDTO.rangeLocation != null">
+      AND range_location like #{queryDTO.rangeLocation}
+    </if>
+    <if test="queryDTO.status != null">
+      AND status = #{queryDTO.status}
+    </if>
+    </where>
+    limit #{offset}, #{limit}
+  </select>
+  <select id="getByCode" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from `range`
+    <where>
+      range_code like #{rangeCode}
+    </where>
+  </select>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.sdu.ise.labs.model.Range" >
+    update `range`
+    set range_code = #{rangeCode,jdbcType=VARCHAR},
+        range_name = #{rangeName,jdbcType=VARCHAR},
+        range_location = #{rangeLocation,jdbcType=VARCHAR},
+        status = #{status,jdbcType=INTEGER},
+        close_reason = #{closeReason,jdbcType=VARCHAR},
+        description = #{description,jdbcType=VARCHAR},
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+        updated_by = #{updatedBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <delete id="deleteByCode">
+        delete
+        from `range`
+        where range_code = #{rangeCode}
+    </delete>
+
+  <select id="countByRangeName" resultType="integer">
+  select count(*)
+  from `range`
+  <where>
+    range_name = #{rangeName}
+  </where>
+  </select>
+</mapper>
