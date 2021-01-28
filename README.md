@@ -228,3 +228,6 @@
 2. 修改数据库配置文件
 
 ## 详细设计
+
+[总结文档](https://github.com/XupengSun/Range_management_module/blob/main/Summary_Docs.pdf)
+
